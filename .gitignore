@@ -6,7 +6,7 @@ temp/
 .env
 coverage
 ormconfig.json
-dist
+dist/
 ormconfig.json
 
 uploads/*
