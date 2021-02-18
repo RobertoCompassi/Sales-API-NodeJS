@@ -1,15 +1,19 @@
 import 'reflect-metadata';
 import express, { Request, Response, NextFunction } from 'express';
+import 'express-async-errors';
 import cors from 'cors';
-import routes from '../routes';
+import { errors } from 'celebrate';
+
 import AppError from '@shared/errors/AppError';
 import '@shared/typeorm';
+import routes from './routes';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json()); // padrao json na api
 app.use(routes);
+app.use(errors())
 
 // middleware para tratamento global de erro 
 app.use(
