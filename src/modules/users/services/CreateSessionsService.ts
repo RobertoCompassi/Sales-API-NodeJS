@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken'
-
+import authConfig from '@config/auth';
 import AppError from "@shared/errors/AppError";
 import { compare, hash } from "bcrypt";
 import { compile } from "joi";
@@ -33,12 +33,11 @@ class CreateSessionsService {
             throw new  AppError('Incorrect email/password combination.', 401);
         }
 
-        const token = sign({}, '008f6e57bf9191fbd69feb6fb34ab82b', {
+        const token = sign({}, authConfig.jwt.secret, {
             subject: user.id,
-            expiresIn: '1d',
+            expiresIn: authConfig.jwt.expiresIn,
         });
 
-        
         return {
             user,
             token
