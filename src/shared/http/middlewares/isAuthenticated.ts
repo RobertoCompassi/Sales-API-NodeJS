@@ -11,26 +11,26 @@ interface ITokenPayload{
 
 export default function isAuthenticated(
     request: Request,
-    respose: Response,
+    response: Response,
     next: NextFunction
 ): void {
     const authHeader = request.headers.authorization;
-
+    
     if(!authHeader) {
         throw new AppError('JWT Token is missing');
     }
 
-    const [, token] = authHeader.split(' ');
+    const token = authHeader.split(' ')[1];
 
     try {
         const decodedToken = verify(token, authConfig.jwt.secret);
+        
         
         const { sub } = decodedToken as ITokenPayload;
 
         request.user = {
             id: sub,
         };  
-
         return next();
 
     } catch (error) {

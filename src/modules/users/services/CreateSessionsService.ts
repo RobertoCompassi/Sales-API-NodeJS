@@ -26,13 +26,13 @@ class CreateSessionsService {
         if(!user){
             throw new  AppError('Incorrect email/password combination.', 401);
         }
-
+        
         // compara a senha que o user digitou com a criptografia
         const passwordConfirmed = await compare(password, user.password);
         if(!passwordConfirmed){
             throw new  AppError('Incorrect email/password combination.', 401);
         }
-
+       
         const token = sign({}, authConfig.jwt.secret, {
             subject: user.id,
             expiresIn: authConfig.jwt.expiresIn,
